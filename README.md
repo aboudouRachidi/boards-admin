@@ -1,9 +1,9 @@
 # boards-admin
 A Java-Fx app for Scrum projects
 
-* USER STORY : 
+# USER STORY : 
 
-*En tant que developpeur je peux : 
+En tant que developpeur je peux : 
 
 - Me connecter/déconnecter de l'application.
 - Modification compte.
