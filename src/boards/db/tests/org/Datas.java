@@ -20,19 +20,25 @@ public class Datas {
 			System.out.println(myMongo.connect("boards"));
 			System.out.println(myMongo.getDbNames());
 
-			dropAll(myMongo);
+/*			dropAll(myMongo);
 			createSteps(myMongo);
 			createDevs(myMongo);
 			createProjects(myMongo);
 			createStories(myMongo);
-			createTags(myMongo);
+			createTags(myMongo);*/
 			List<Step> steps = myMongo.load(Step.class);
 			System.out.println(steps);
 			List<Developer> devs = myMongo.load(Developer.class);
 			List<Project> projects = myMongo.load(Project.class);
 			List<Story> stories = myMongo.load(Story.class);
 			List<Tag> tags = myMongo.load(Tag.class);
-			stories.get(0).setDeveloper(devs.get(0));
+			setDevProjects(projects,devs);
+			setProjectsStories(stories, projects);
+			System.out.println(devs.get(0).getProjects());
+			for (Project prj:projects){
+				System.out.println(prj.getStories());
+			}
+			/*stories.get(0).setDeveloper(devs.get(0));
 			stories.get(0).setProject(projects.get(0));
 			stories.get(1).setProject(projects.get(0));
 			stories.get(2).setProject(projects.get(0));
@@ -47,11 +53,30 @@ public class Datas {
 			myMongo.save("Story", stories);
 			System.out.println(devs);
 			myMongo.save("Developer", devs);
-			myMongo.save("Project", projects);
+			myMongo.save("Project", projects);*/
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private static void setDevProjects(List<Project> projects, List<Developer> developers){
+		for (Project project:projects){
+			if(project.getOwner() != null) {
+				int devIndex = developers.indexOf(project.getOwner());
+				//project.getOwner().getProjects().add(project);
+				developers.get(devIndex).getProjects().add(project);
+			}
+		}
+	}
+
+	private static void setProjectsStories(List<Story> stories,List<Project> projects){
+		for (Story story:stories){
+			if (story.getProject() != null){
+				//int projectIndex = ;
+				story.getProject().getStories().add(story);
+			}
 		}
 	}
 
